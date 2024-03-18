@@ -1,0 +1,22 @@
+# Package Load
+library(tidyverse)
+
+
+# Data Load ---------------------------------------------------------------
+
+#provided the filenaming system remains consistent, this should scan for all of the CDE enrollment data files and create unique data.frames with correct names for each of them
+
+enrfiles=list.files(path="Data", pattern="CDE Enrollment*", full.names=TRUE) #create a list of data files with "CDE Enrollment" at the start
+
+get_enrfiles=lapply(X=enrfiles, FUN=read.table, sep="\t", header=TRUE, fill=TRUE, quote = "") #apply the file reader to the list of files
+
+names(get_enrfiles)=as.list(gsub("Data/","",gsub(".txt","",enrfiles))) #add names to our list of files and remove extraneous characters
+
+get_enrfiles=Map(cbind, get_enrfiles, Year=gsub("CDE Enrollment ","",names(get_enrfiles))) #add a year column to each of the dataframes
+
+list2env(get_enrfiles, envir=.GlobalEnv) #converts all items in get_enrfiles into unique dataframes
+
+
+# Data Merge --------------------------------------------------------------
+
+full_enr=rbind(get_enrfiles)

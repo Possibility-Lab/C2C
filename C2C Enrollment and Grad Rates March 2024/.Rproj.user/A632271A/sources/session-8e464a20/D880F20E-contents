@@ -1,0 +1,34 @@
+---
+title: "CDE Enrollment 2012-Present"
+author: "Randy Clopton"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Package Load
+```{r}
+library(tidyverse)
+```
+
+# Enrollment
+## Load in data
+```{r}
+enrfiles=list.files(pattern="CDE Enrollment*", full.names=TRUE) #create a list of files with "CDE Enrollment" at the start
+
+enrfiles
+
+get_enrfiles=lapply(enrfiles, read.table) #apply the file reader to the list of files
+
+getwd()
+
+
+```
+
+
+
+
+# Cumulative Enrollment

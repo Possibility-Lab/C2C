@@ -1,0 +1,11 @@
+---
+title: "CDE Graduation Rates 2016-Present"
+author: "Randy Clopton"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
