@@ -36,6 +36,9 @@ i_inst=read.csv("Raw Data/hd2022.csv", header=TRUE) %>% #load data
 full_i_enr=left_join(data_i_enr,i_inst, by="UNITID") %>% #join by UNITID
   filter(STABBR=="CA") #filter out all of the non-CA institutions
 
+full_i_enr_2=left_join(data_i_enr,i_inst, by="UNITID")
+
+
 # Clean Data --------------------------------------------------------------
 ## Key things here are dropping unnecessary data, renaming, and recoding
 
@@ -59,23 +62,24 @@ colnames(full_i_enr)
 head(full_i_enr)
 
 #create a list of community colleges for easier use later
-ccc=c("Allan Hancock College","American River College","Antelope Valley College",
+#note that this dataset does not include Calbright College (fully online) or San Diego School of Continuing Education
+ccc=c("Allan Hancock College","American River College","Antelope Valley Community College District",
       "Bakersfield College","Barstow Community College","Berkeley City College",
-      "Butte College","Cabrillo College","Canada College","Cerritos College",
+      "Butte College","Cabrillo College","Calbright College","Canada College","Cerritos College",
       "Cerro Coso Community College","Chabot College","Chaffey College",
       "Citrus College","City College of San Francisco","Clovis Community College",
       "Coastline Community College","College of Alameda","College of Marin",
       "College of San Mateo","College of the Canyons","College of the Desert",
       "College of the Redwoods","College of the Sequoias","College of the Siskiyous",
-      "Columbia College","Compton College","Contra Costa College","Copper Mountain College",
+      "Columbia College","Compton College","Contra Costa College","Copper Mountain Community College",
       "Cosumnes River College","Crafton Hills College","Cuesta College",
       "Cuyamaca College","Cypress College", "De Anza College","Diablo Valley College",
       "East Los Angeles College","El Camino Community College District",
-      "Evergreen Valley College","Feather River College", "Folsom Lake College",
+      "Evergreen Valley College","Feather River Community College District", "Folsom Lake College",
       "Foothill College","Fresno City College","Fullerton College","Gavilan College",
       "Glendale Community College","Golden West College","Grossmont College",
       "Hartnell College","Imperial Valley College","Irvine Valley College",
-      "Lake Tahoe Community College","Laney College","Las Positas College","Lassen College",
+      "Lake Tahoe Community College","Laney College","Las Positas College","Lassen Community College",
       "Long Beach City College","Los Angeles City College","Los Angeles Harbor College",
       "Los Angeles Mission College","Los Angeles Pierce College","Los Angeles Southwest College",
       "Los Angeles Trade Technical College","Los Angeles Valley College","Los Medanos College",
@@ -92,8 +96,10 @@ ccc=c("Allan Hancock College","American River College","Antelope Valley College"
       "Santa Rosa Junior College","Santiago Canyon College","Shasta College",
       "Sierra College","Skyline College","Solano Community College",
       "Southwestern College","Taft College","Ventura College","Victor Valley College",
-      "West Hills College Coalinga","West Hills College Lemoore","West Los Angeles College",
-      "West Valley College","Woodland Community College","Yuba College")
+      "West Hills College-Coalinga","West Hills College-Lemoore","West Los Angeles College",
+      "West Valley College","Woodland Community College","Yuba College","San Joaquin Valley College-Madera",
+      "Mt San Antonio College","Mt San Jacinto Community College District")
+
 
 full_i_enr_clean=full_i_enr %>%
   dplyr::select(-starts_with(c("X"))) %>% #select all the columns that don't start with X. X at the beginning indicates imputed data, which for the most part is not included.
@@ -147,10 +153,8 @@ full_i_enr_clean=full_i_enr %>%
            is.na(`Level/Degree Status`) ~ NA))
 
 
-
 # Export to csv -----------------------------------------------------------
 
 write.csv(full_i_enr_clean, "Clean Data/IPEDS_Postsecondary_Enrollment.csv",row.names=FALSE) #creates a csv in the project folder Clean Data called IPEDS_Postsecondary_Enrollment.csv
 
-
-
+         
